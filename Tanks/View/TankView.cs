@@ -9,96 +9,27 @@ using System.Drawing;
 
 namespace View
 {
-    public class TankView
+    public class TankView : MovableGameObjectView
     {
-        private Tank _tank = new Tank();
-        private PictureBox _tankView = new PictureBox();
-        private PartsOfTheWorld _direction;
+        private Tank _tank;
 
-        public TankView()
-        { }
-
-        public TankView(int x, int y, int width, int height)
+        public TankView() : base(new Tank())
         {
-            _tank.X = x;
-            _tank.Y = y;
-            _tank.Width = width;
-            _tank.Height = height;
+            _tank = (Tank)GameObject;   
         }
 
-        public int X
+        public TankView(int x, int y, int width, int height) : base(new Tank(x, y, width, height))
         {
-            get
-            {
-                return _tank.X;
-            }
-            set
-            {
-                _tank.X = value;
-            }
-        }
-
-        public int Y
-        {
-            get
-            {
-                return _tank.Y;
-            }
-            set
-            {
-                _tank.Y = value;
-            }
-        }
-
-        public int Width
-        {
-            get
-            {
-                return _tank.Width;
-            }
-            set
-            {
-                _tank.Width = value;
-            }
-        }
-
-        public int Height
-        {
-            get
-            {
-                return _tank.Height;
-            }
-            set
-            {
-                _tank.Height = value;
-            }
-        }
-
-        public PartsOfTheWorld Direction
-        {
-            get
-            {
-                return _direction;
-            }
-
-            set
-            {
-                _direction = value;
-            }
+            _tank = (Tank)GameObject;
         }
 
         public PictureBox Draw()
         {
-            _tankView.BackColor = Color.Black;
-            _tankView.Location = new Point(_tank.X, _tank.Y);
-            _tankView.Size = new Size(10, 10);
+            ObjectView.BackColor = Color.Black;
+            ObjectView.Location = new Point(_tank.X, _tank.Y);
+            ObjectView.Size = new Size(_tank.Width, _tank.Height);
 
-            return _tankView;
-        }
-
-        public void Move(int newX, int newY)
-        {
-            _tankView.Location = _tank.Move(newX, newY);
+            return ObjectView;
         }
     }
 }

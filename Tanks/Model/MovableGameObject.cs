@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Tank : MovableGameObject
+    public class MovableGameObject : GameObject
     {
-        public Tank()
+        public MovableGameObject()
         { }
 
-        public Tank(int x, int y, int width, int height) : base(x, y, width, height)
+        public MovableGameObject(int x, int y, int width, int height) : base(x, y, width, height)
         { }
 
-        /*public Point Move(int newX, int newY)
+        public Point Move(int newX, int newY)
         {
             X = newX;
             Y = newY;
             return new Point(X, Y);
-        }*/
+        }
     }
 }

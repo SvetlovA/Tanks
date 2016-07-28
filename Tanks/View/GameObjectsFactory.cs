@@ -18,6 +18,16 @@ namespace View
             return new FieldView(x, y, width, height);
         }
 
+        public override KolobokView CreateKolobok()
+        {
+            return new KolobokView();
+        }
+
+        public override KolobokView CreateKolobok(int x, int y, int width, int height)
+        {
+            return new KolobokView(x, y, width, height);
+        }
+
         public override TankView CreateTank()
         {
             return new TankView();

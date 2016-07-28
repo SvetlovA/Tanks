@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public abstract class GameObject
+    public class GameObject
     {
         private int _x;
         private int _y;

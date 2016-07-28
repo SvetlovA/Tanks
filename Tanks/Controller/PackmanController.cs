@@ -10,11 +10,10 @@ namespace Controller
 {
     public class PackmanController
     {
-        private GameObjectsFactory _factory = new GameObjectsFactory();
+        private readonly GameObjectsFactory _factory = new GameObjectsFactory();
         private readonly FieldView _fieldView;
-        List<TankView> _tanks = new List<TankView>();
-        private int _speedX;
-        private int _speedY;
+        private List<TankView> _tanks = new List<TankView>();
+        private KolobokView _kolobok;
 
         public PackmanController()
         {
@@ -48,19 +47,71 @@ namespace Controller
         public PictureBox Draw()
         {
             PictureBox field = _factory.CreateField(10, 10, FieldWidth, FieldHeight).Draw();
-            int x = 0;
-            int y = 0;
-            for (int i = 0; i < 3; i++)
-            {
-                TankView tank = _factory.CreateTank(x, y, 10, 10);
-                field.Controls.Add(tank.Draw());
-                _tanks.Add(tank);
-                x += 20;
-            }
+            field.Controls.AddRange(DrawTanks(3).ToArray());
+            field.Controls.Add(DrawKolobok());
             return field;
         }
 
+        private PictureBox DrawKolobok()
+        {
+            _kolobok = _factory.CreateKolobok(_fieldView.Width / 2, _fieldView.Height / 2, 10, 10);
+            return _kolobok.Draw();
+        }
+
+        private IEnumerable<PictureBox> DrawTanks(int count)
+        {
+            int x = 0;
+            int y = 0;
+            for (int i = 0; i < count; i++)
+            {
+                TankView tank = _factory.CreateTank(x, y, 10, 10);
+                _tanks.Add(tank);
+                x += 20;
+                yield return tank.Draw();
+            }
+        }
+
+        public void KolobokDirection(Keys key)
+        {
+            switch (key)
+            {
+                case Keys.Up:
+                    _kolobok.Direction = PartsOfTheWorld.North;
+                    break;
+                case Keys.Down:
+                    _kolobok.Direction = PartsOfTheWorld.South;
+                    break;
+                case Keys.Left:
+                    _kolobok.Direction = PartsOfTheWorld.West;
+                    break;
+                case Keys.Right:
+                    _kolobok.Direction = PartsOfTheWorld.East;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void KolobokMovement()
+        {
+            if (_kolobok.Direction == PartsOfTheWorld.None)
+            {
+                _kolobok.Direction = Direction(_kolobok);
+                Move(_kolobok.Direction, _kolobok, 1);
+            }
+            else
+            {
+                Move(_kolobok.Direction, _kolobok, 1);
+            }
+        }
+
         public void Movement()
+        {
+            KolobokMovement();
+            TanksMovement();
+        }
+
+        private void TanksMovement()
         {
             foreach (var tank in _tanks)
             {
@@ -76,13 +127,13 @@ namespace Controller
             }
         }
 
-        private PartsOfTheWorld Direction(TankView tank)
+        private PartsOfTheWorld Direction(GameObjectView gameObject)
         {
             Random rnd = new Random();
             switch (rnd.Next(0, 4))
             {
                 case 0:
-                    if (tank.Y > 0)
+                    if (gameObject.Y > 0)
                     {
                         return PartsOfTheWorld.North;
                     }
@@ -91,7 +142,7 @@ namespace Controller
                         return PartsOfTheWorld.None;
                     }
                 case 1:
-                    if (tank.Y + tank.Width < _fieldView.Height)
+                    if (gameObject.Y + gameObject.Width < _fieldView.Height)
                     {
                         return PartsOfTheWorld.South;
                     }
@@ -100,7 +151,7 @@ namespace Controller
                         return PartsOfTheWorld.None;
                     }
                 case 2:
-                    if (tank.X > 0)
+                    if (gameObject.X > 0)
                     {
                         return PartsOfTheWorld.West;
                     }
@@ -109,7 +160,7 @@ namespace Controller
                         return PartsOfTheWorld.None;
                     }
                 case 3:
-                    if (tank.Y + tank.Width < _fieldView.Width)
+                    if (gameObject.Y + gameObject.Width < _fieldView.Width)
                     {
                         return PartsOfTheWorld.East;
                     }
@@ -122,48 +173,48 @@ namespace Controller
             }
         }
 
-        private void Move(PartsOfTheWorld direction, TankView tank, int step)
+        private void Move(PartsOfTheWorld direction, MovableGameObjectView gameObject, int step)
         {
             switch (direction)
             {
                 case PartsOfTheWorld.North:
-                    MoveY(tank, -step);
+                    MoveY(gameObject, -step);
                     break;
                 case PartsOfTheWorld.South:
-                    MoveY(tank, step);
+                    MoveY(gameObject, step);
                     break;
                 case PartsOfTheWorld.West:
-                    MoveX(tank, -step);
+                    MoveX(gameObject, -step);
                     break;
                 case PartsOfTheWorld.East:
-                    MoveX(tank, step);
+                    MoveX(gameObject, step);
                     break;
                 default:
                     break;
             }
         }
 
-        private void MoveY(TankView tank, int step)
+        private void MoveY(MovableGameObjectView gameObject, int step)
         {
-            if (tank.Y + step >= 0 && tank.Y + step + tank.Height <= _fieldView.Height)
+            if (gameObject.Y + step >= 0 && gameObject.Y + step + gameObject.Height <= _fieldView.Height)
             {
-                tank.Move(tank.X, tank.Y + step);
+                gameObject.Move(gameObject.X, gameObject.Y + step);
             }
             else
             {
-                tank.Direction = Direction(tank);
+                gameObject.Direction = Direction(gameObject);
             }
         }
 
-        private void MoveX(TankView tank, int step)
+        private void MoveX(MovableGameObjectView gameObject, int step)
         {
-            if (tank.X + step >= 0 && tank.X + step + tank.Width <= _fieldView.Width)
+            if (gameObject.X + step >= 0 && gameObject.X + step + gameObject.Width <= _fieldView.Width)
             {
-                tank.Move(tank.X + step, tank.Y);
+                gameObject.Move(gameObject.X + step, gameObject.Y);
             }
             else
             {
-                tank.Direction = Direction(tank);
+                gameObject.Direction = Direction(gameObject);
             }
         }
     }

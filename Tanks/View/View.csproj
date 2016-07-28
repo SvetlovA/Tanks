@@ -45,7 +45,10 @@
     <Compile Include="AbstractFactory.cs" />
     <Compile Include="FieldView.cs" />
     <Compile Include="GameObjectsFactory.cs" />
-    <Compile Include="PArtsOfTheWorld.cs" />
+    <Compile Include="GameObjectView.cs" />
+    <Compile Include="KolobokView.cs" />
+    <Compile Include="MovableGameObjectView.cs" />
+    <Compile Include="PartsOfTheWorld.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TankView.cs" />
   </ItemGroup>

@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Field.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="Kolobok.cs" />
+    <Compile Include="MovableGameObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tank.cs" />
   </ItemGroup>

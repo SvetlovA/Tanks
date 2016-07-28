@@ -9,68 +9,19 @@ using System.Drawing;
 
 namespace View
 {
-    public class FieldView
+    public class FieldView : GameObjectView
     {
-        private Field _field = new Field();
+        private Field _field;
         private PictureBox _fieldView = new PictureBox();
 
-        public FieldView()
-        { }
-
-        public FieldView(int x, int y, int width, int height)
+        public FieldView() : base(new Field())
         {
-            _field.X = x;
-            _field.Y = y;
-            _field.Width = width;
-            _field.Height = height;
+            _field = (Field)GameObject;
         }
 
-        public int X
+        public FieldView(int x, int y, int width, int height) : base(new Field(x, y, width, height))
         {
-            get
-            {
-                return _field.X;
-            }
-            set
-            {
-                _field.X = value;
-            }
-        }
-
-        public int Y
-        {
-            get
-            {
-                return _field.Y;
-            }
-            set
-            {
-                _field.Y = value;
-            }
-        }
-
-        public int Width
-        {
-            get
-            {
-                return _field.Width;
-            }
-            set
-            {
-                _field.Width = value;
-            }
-        }
-
-        public int Height
-        {
-            get
-            {
-                return _field.Height;
-            }
-            set
-            {
-                _field.Height = value;
-            }
+            _field = (Field)GameObject;
         }
 
         public PictureBox Draw()

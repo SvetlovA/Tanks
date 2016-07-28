@@ -29,5 +29,10 @@ namespace UserInterface
         {
             _controller.Movement();
         }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            _controller.KolobokDirection(e.KeyCode);
+        }
     }
 }
