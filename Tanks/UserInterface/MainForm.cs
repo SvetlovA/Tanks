@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Controller;
 
-namespace UserInterface
+namespace View
 {
     public partial class MainForm : Form
     {
@@ -18,11 +18,9 @@ namespace UserInterface
         public MainForm()
         {
             InitializeComponent();
-            _controller.FieldWidth = 400;
-            _controller.FieldHeight = 400;
             Controls.Add(_controller.Draw());
-            Width = _controller.FieldWidth + 40;
-            Height = _controller.FieldHeight + 60;
+            Width = _controller.Field.Width + 40;
+            Height = _controller.Field.Height + 60;
         }
 
         private void timer_Tick(object sender, EventArgs e)

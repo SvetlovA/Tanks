@@ -1,41 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace View
+namespace Model
 {
     public class GameObjectsFactory : AbstractFactory
     {
-        public override FieldView CreateField()
+        public override GameObject CreateField()
         {
-            return new FieldView();
+            return new GameObject();
         }
 
-        public override FieldView CreateField(int x, int y, int width, int height)
+        public override GameObject CreateField(int x, int y, int width, int height, Color color)
         {
-            return new FieldView(x, y, width, height);
+            return new GameObject(x, y, width, height, color);
         }
 
-        public override KolobokView CreateKolobok()
+        public override Kolobok CreateKolobok()
         {
-            return new KolobokView();
+            return new Kolobok();
         }
 
-        public override KolobokView CreateKolobok(int x, int y, int width, int height)
+        public override Kolobok CreateKolobok(int x, int y, int width, int height, Color color)
         {
-            return new KolobokView(x, y, width, height);
+            return new Kolobok(x, y, width, height, color);
         }
 
-        public override TankView CreateTank()
+        public override Tank CreateTank()
         {
-            return new TankView();
+            return new Tank();
         }
 
-        public override TankView CreateTank(int x, int y, int width, int height)
+        public override Tank CreateTank(int x, int y, int width, int height, Color color)
         {
-            return new TankView(x, y, width, height);
+            return new Tank(x, y, width, height, color);
         }
     }
 }

@@ -3,58 +3,60 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using View;
+using Model;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Controller
 {
     public class PackmanController
     {
         private readonly GameObjectsFactory _factory = new GameObjectsFactory();
-        private readonly FieldView _fieldView;
-        private List<TankView> _tanks = new List<TankView>();
-        private KolobokView _kolobok;
+        private GameObject _field;
+        private List<Tank> _tanks = new List<Tank>();
+        private Kolobok _kolobok;
 
         public PackmanController()
         {
-            _fieldView = _factory.CreateField();
+            _field = _factory.CreateField();
         }
 
-        public int FieldWidth
+        public GameObject Field
         {
             get
             {
-                return _fieldView.Width;
-            }
-            set
-            {
-                _fieldView.Width = value;
+                return _field;
             }
         }
 
-        public int FieldHeight
+        public Kolobok Kolobok
         {
             get
             {
-                return _fieldView.Height;
+                return _kolobok;
             }
-            set
+        }
+
+        public List<Tank> Tanks
+        {
+            get
             {
-                _fieldView.Height = value;
+                return _tanks;
             }
         }
 
         public PictureBox Draw()
         {
-            PictureBox field = _factory.CreateField(10, 10, FieldWidth, FieldHeight).Draw();
-            field.Controls.AddRange(DrawTanks(3).ToArray());
-            field.Controls.Add(DrawKolobok());
-            return field;
+            _field = _factory.CreateField(10, 10, 400, 400, Color.White);
+            PictureBox fieldView = _field.Draw();
+            fieldView.Controls.AddRange(DrawTanks(3).ToArray());
+            fieldView.Controls.Add(DrawKolobok());
+            return fieldView;
         }
 
         private PictureBox DrawKolobok()
         {
-            _kolobok = _factory.CreateKolobok(_fieldView.Width / 2, _fieldView.Height / 2, 10, 10);
+            _kolobok = _factory.CreateKolobok(_field.Width / 2, _field.Height / 2, 10, 10, Color.Red);
             return _kolobok.Draw();
         }
 
@@ -64,7 +66,7 @@ namespace Controller
             int y = 0;
             for (int i = 0; i < count; i++)
             {
-                TankView tank = _factory.CreateTank(x, y, 10, 10);
+                Tank tank = _factory.CreateTank(x, y, 10, 10, Color.Black);
                 _tanks.Add(tank);
                 x += 20;
                 yield return tank.Draw();
@@ -127,7 +129,7 @@ namespace Controller
             }
         }
 
-        private PartsOfTheWorld Direction(GameObjectView gameObject)
+        private PartsOfTheWorld Direction(GameObject gameObject)
         {
             Random rnd = new Random();
             switch (rnd.Next(0, 4))
@@ -142,7 +144,7 @@ namespace Controller
                         return PartsOfTheWorld.None;
                     }
                 case 1:
-                    if (gameObject.Y + gameObject.Width < _fieldView.Height)
+                    if (gameObject.Y + gameObject.Width < _field.Height)
                     {
                         return PartsOfTheWorld.South;
                     }
@@ -160,7 +162,7 @@ namespace Controller
                         return PartsOfTheWorld.None;
                     }
                 case 3:
-                    if (gameObject.Y + gameObject.Width < _fieldView.Width)
+                    if (gameObject.Y + gameObject.Width < _field.Width)
                     {
                         return PartsOfTheWorld.East;
                     }
@@ -173,7 +175,7 @@ namespace Controller
             }
         }
 
-        private void Move(PartsOfTheWorld direction, MovableGameObjectView gameObject, int step)
+        private void Move(PartsOfTheWorld direction, MovableGameObject gameObject, int step)
         {
             switch (direction)
             {
@@ -194,9 +196,9 @@ namespace Controller
             }
         }
 
-        private void MoveY(MovableGameObjectView gameObject, int step)
+        private void MoveY(MovableGameObject gameObject, int step)
         {
-            if (gameObject.Y + step >= 0 && gameObject.Y + step + gameObject.Height <= _fieldView.Height)
+            if (gameObject.Y + step >= 0 && gameObject.Y + step + gameObject.Height <= _field.Height)
             {
                 gameObject.Move(gameObject.X, gameObject.Y + step);
             }
@@ -206,9 +208,9 @@ namespace Controller
             }
         }
 
-        private void MoveX(MovableGameObjectView gameObject, int step)
+        private void MoveX(MovableGameObject gameObject, int step)
         {
-            if (gameObject.X + step >= 0 && gameObject.X + step + gameObject.Width <= _fieldView.Width)
+            if (gameObject.X + step >= 0 && gameObject.X + step + gameObject.Width <= _field.Width)
             {
                 gameObject.Move(gameObject.X + step, gameObject.Y);
             }

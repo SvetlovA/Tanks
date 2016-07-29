@@ -1,4 +1,4 @@
-﻿namespace UserInterface
+﻿namespace View
 {
     partial class MainForm
     {
