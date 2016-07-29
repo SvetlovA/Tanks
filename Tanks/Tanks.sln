@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controller", "Controller\Controller.csproj", "{87259DE1-DB73-406D-9325-61764F088D59}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TanksController", "TanksController", "{DDC7A326-8B70-4EE3-87D5-5077E9060BAE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TanksModel", "TanksModel", "{3890BE1D-0398-43A4-8CC0-A931E7A3B547}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "View\Model.csproj", "{15C6FF91-1B6D-4CA1-A0A6-E1CD4A87F041}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TanksView", "TanksView", "{619A21BB-0AF2-45A1-960D-A04114E82C76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "UserInterface\View.csproj", "{D989DF42-B3FA-46EE-9BE5-2D7455496A12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controller", "TanksController\Controller.csproj", "{87259DE1-DB73-406D-9325-61764F088D59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "TanksModel\Model.csproj", "{15C6FF91-1B6D-4CA1-A0A6-E1CD4A87F041}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "TanksView\View.csproj", "{D989DF42-B3FA-46EE-9BE5-2D7455496A12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
