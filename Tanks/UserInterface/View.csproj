@@ -88,6 +88,10 @@
       <Project>{87259de1-db73-406d-9325-61764f088d59}</Project>
       <Name>Controller</Name>
     </ProjectReference>
+    <ProjectReference Include="..\View\Model.csproj">
+      <Project>{15C6FF91-1B6D-4CA1-A0A6-E1CD4A87F041}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
