@@ -12,9 +12,23 @@ namespace Controller
     public class PackmanController
     {
         private readonly GameObjectsFactory _factory = new GameObjectsFactory();
-        private GameObject _field;
+        private Field _field;
         private List<Tank> _tanks = new List<Tank>();
+        private List<GameObject> _walls = new List<GameObject>();
         private Kolobok _kolobok;
+        private GameObject _fruit;
+
+        private string[] map = new string[] 
+        {
+            "wwwwwwwwww",
+            "w000w000ew",
+            "w00ww000ew",
+            "w00w00000w",
+            "we0w00000w",
+            "w00000000w",
+            "w0000000pw",
+            "wwwwwwwwww"
+        };
 
         public PackmanController()
         {
@@ -47,29 +61,63 @@ namespace Controller
 
         public PictureBox Draw()
         {
-            _field = _factory.CreateField(10, 10, 400, 400, Color.White);
-            PictureBox fieldView = _field.Draw();
-            fieldView.Controls.AddRange(DrawTanks(3).ToArray());
-            fieldView.Controls.Add(DrawKolobok());
-            return fieldView;
+            _field = _factory.CreateField(10, 10, map[0].Length * 10, map.Length * 10, Color.White);
+            for (int y = 0; y < map.Length; y++)
+            {
+                for (int x = 0; x < map[y].Length; x++)
+                {
+                    switch (map[y][x])
+                    {
+                        case 'w':
+                            _field.Add(DrawWall(x, y));
+                            break;
+                        case 'e':
+                            _field.Add(DrawTank(x, y));
+                            break;
+                        case 'p':
+                            _field.Add(DrawKolobok(x, y));
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            return _field.Draw();
         }
 
-        private PictureBox DrawKolobok()
+        private Kolobok DrawKolobok(int x, int y)
         {
             _kolobok = _factory.CreateKolobok(_field.Width / 2, _field.Height / 2, 10, 10, Color.Red);
-            return _kolobok.Draw();
+            return _kolobok;
         }
 
-        private IEnumerable<PictureBox> DrawTanks(int count)
+        private Tank DrawTank(int x, int y)
         {
-            int x = 0;
-            int y = 0;
-            for (int i = 0; i < count; i++)
+            Tank tank = _factory.CreateTank(x * 10, y * 10, 10, 10, Color.Black);
+            _tanks.Add(tank);
+            return tank;
+        }
+
+        private GameObject DrawWall(int x, int y)
+        {
+            GameObject wall = _factory.CraateWall(x * 10, y * 10, 10, 10, Color.Blue);
+            _walls.Add(wall);
+            return wall;
+        }
+
+        public void DrawFruit()
+        {
+            Random rnd = new Random();
+            int x = rnd.Next(0, map[0].Length);
+            int y = rnd.Next(0, map.Length);
+            if (_fruit != null)
             {
-                Tank tank = _factory.CreateTank(x, y, 10, 10, Color.Black);
-                _tanks.Add(tank);
-                x += 20;
-                yield return tank.Draw();
+                _fruit.Dispose();
+            }
+            if (map[y][x] != 'w')
+            {
+                _fruit = _factory.CreateFruit(x * 10, y * 10, 10, 10, Color.Red);
+                _field.Add(_fruit);
             }
         }
 
@@ -196,9 +244,22 @@ namespace Controller
             }
         }
 
+        private bool IntersectsWithWall(MovableGameObject gameObject)
+        {
+            foreach (var wall in _walls)
+            {
+                if (gameObject.IntersectsWith(wall))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         private void MoveY(MovableGameObject gameObject, int step)
         {
-            if (gameObject.Y + step >= 0 && gameObject.Y + step + gameObject.Height <= _field.Height)
+            MovableGameObject nextPosition = new MovableGameObject(gameObject.X, gameObject.Y + step, gameObject.Width, gameObject.Height, gameObject.Color);
+            if (nextPosition.Y >= 0 && nextPosition.Y + nextPosition.Height <= _field.Height && IntersectsWithWall(nextPosition))
             {
                 gameObject.Move(gameObject.X, gameObject.Y + step);
             }
@@ -210,13 +271,25 @@ namespace Controller
 
         private void MoveX(MovableGameObject gameObject, int step)
         {
-            if (gameObject.X + step >= 0 && gameObject.X + step + gameObject.Width <= _field.Width)
+            MovableGameObject nextPosition = new MovableGameObject(gameObject.X + step, gameObject.Y, gameObject.Width, gameObject.Height, gameObject.Color);
+            if (nextPosition.X >= 0 && nextPosition.X + nextPosition.Width <= _field.Width && IntersectsWithWall(nextPosition))
             {
                 gameObject.Move(gameObject.X + step, gameObject.Y);
             }
             else
             {
                 gameObject.Direction = Direction(gameObject);
+            }
+        }
+
+        public void Fighting()
+        {
+            foreach (var tank in _tanks)
+            {
+                if (_kolobok.IntersectsWith(tank))
+                {
+                    tank.Attack(_kolobok);
+                }
             }
         }
     }

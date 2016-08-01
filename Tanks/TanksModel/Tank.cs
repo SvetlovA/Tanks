@@ -15,5 +15,10 @@ namespace Model
 
         public Tank(int x, int y, int width, int height, Color color) : base(x, y, width, height, color)
         { }
+
+        public void Attack(Kolobok kolobok)
+        {
+            kolobok.Dispose();
+        }
     }
 }

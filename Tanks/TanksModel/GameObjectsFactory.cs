@@ -9,12 +9,22 @@ namespace Model
 {
     public class GameObjectsFactory : AbstractFactory
     {
-        public override GameObject CreateField()
+        public override Field CreateField()
+        {
+            return new Field();
+        }
+
+        public override Field CreateField(int x, int y, int width, int height, Color color)
+        {
+            return new Field(x, y, width, height, color);
+        }
+
+        public override GameObject CreateWall()
         {
             return new GameObject();
         }
 
-        public override GameObject CreateField(int x, int y, int width, int height, Color color)
+        public override GameObject CraateWall(int x, int y, int width, int height, Color color)
         {
             return new GameObject(x, y, width, height, color);
         }
@@ -37,6 +47,16 @@ namespace Model
         public override Tank CreateTank(int x, int y, int width, int height, Color color)
         {
             return new Tank(x, y, width, height, color);
+        }
+
+        public override GameObject CreateFruit()
+        {
+            return new GameObject();
+        }
+
+        public override GameObject CreateFruit(int x, int y, int width, int height, Color color)
+        {
+            return new GameObject(x, y, width, height, color);
         }
     }
 }

@@ -10,10 +10,17 @@ namespace Model
 {
     public class Kolobok : MovableGameObject
     {
+        private int _points;
+
         public Kolobok()  : base()
         { }
 
         public Kolobok(int x, int y, int width, int height, Color color) : base(x, y, width, height, color)
         { }
+
+        public void GetPoint()
+        {
+            _points++;
+        }
     }
 }

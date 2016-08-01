@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Model
 {
-    public class GameObject
+    public class GameObject : IDisposable
     {
         private PictureBox _gameObject = new PictureBox();
 
@@ -90,9 +90,27 @@ namespace Model
             }
         }
 
+        public Rectangle Bounds
+        {
+            get
+            {
+                return _gameObject.Bounds;
+            }
+        }
+
+        public bool IntersectsWith(GameObject gameObject)
+        {
+            return _gameObject.Bounds.IntersectsWith(gameObject.Bounds);
+        }
+
         public PictureBox Draw()
         {
             return _gameObject;
+        }
+
+        public void Dispose()
+        {
+            _gameObject.Dispose();
         }
     }
 }

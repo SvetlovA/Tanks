@@ -29,14 +29,21 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.timer = new System.Windows.Forms.Timer(this.components);
+            this.MoveTimer = new System.Windows.Forms.Timer(this.components);
+            this.FruitTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
-            // timer
+            // MoveTimer
             // 
-            this.timer.Enabled = true;
-            this.timer.Interval = 20;
-            this.timer.Tick += new System.EventHandler(this.timer_Tick);
+            this.MoveTimer.Enabled = true;
+            this.MoveTimer.Interval = 20;
+            this.MoveTimer.Tick += new System.EventHandler(this.timer_Tick);
+            // 
+            // FruitTimer
+            // 
+            this.FruitTimer.Enabled = true;
+            this.FruitTimer.Interval = 1000;
+            this.FruitTimer.Tick += new System.EventHandler(this.FruitTimer_Tick);
             // 
             // MainForm
             // 
@@ -52,6 +59,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.Timer MoveTimer;
+        private System.Windows.Forms.Timer FruitTimer;
     }
 }
