@@ -15,6 +15,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "TanksModel\Model.c
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "TanksView\View.csproj", "{D989DF42-B3FA-46EE-9BE5-2D7455496A12}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{196816F2-B363-49AD-81F6-88DE7C261DA6}"
+	ProjectSection(SolutionItems) = preProject
+		Images\kolobok.png = Images\kolobok.png
+		Images\tank.png = Images\tank.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

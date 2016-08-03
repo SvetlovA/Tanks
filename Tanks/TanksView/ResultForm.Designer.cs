@@ -1,6 +1,6 @@
 ﻿namespace View
 {
-    partial class MainForm
+    partial class ResultForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,62 +28,59 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.MoveTimer = new System.Windows.Forms.Timer(this.components);
-            this.FruitTimer = new System.Windows.Forms.Timer(this.components);
-            this.buttonNewGame = new System.Windows.Forms.Button();
+            this.labelResult = new System.Windows.Forms.Label();
+            this.buttonMenu = new System.Windows.Forms.Button();
             this.buttonExit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // MoveTimer
+            // labelResult
             // 
-            this.MoveTimer.Interval = 20;
-            this.MoveTimer.Tick += new System.EventHandler(this.timer_Tick);
+            this.labelResult.AutoSize = true;
+            this.labelResult.Location = new System.Drawing.Point(12, 9);
+            this.labelResult.Name = "labelResult";
+            this.labelResult.Size = new System.Drawing.Size(88, 13);
+            this.labelResult.TabIndex = 0;
+            this.labelResult.Text = "Ваш реузльтат: ";
             // 
-            // FruitTimer
+            // buttonMenu
             // 
-            this.FruitTimer.Interval = 10000;
-            this.FruitTimer.Tick += new System.EventHandler(this.FruitTimer_Tick);
-            // 
-            // buttonNewGame
-            // 
-            this.buttonNewGame.Location = new System.Drawing.Point(87, 64);
-            this.buttonNewGame.Name = "buttonNewGame";
-            this.buttonNewGame.Size = new System.Drawing.Size(75, 23);
-            this.buttonNewGame.TabIndex = 0;
-            this.buttonNewGame.Text = "Новая игра";
-            this.buttonNewGame.UseVisualStyleBackColor = true;
-            this.buttonNewGame.Click += new System.EventHandler(this.buttonNewGame_Click);
+            this.buttonMenu.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonMenu.Location = new System.Drawing.Point(12, 37);
+            this.buttonMenu.Name = "buttonMenu";
+            this.buttonMenu.Size = new System.Drawing.Size(75, 23);
+            this.buttonMenu.TabIndex = 1;
+            this.buttonMenu.Text = "В меню";
+            this.buttonMenu.UseVisualStyleBackColor = true;
             // 
             // buttonExit
             // 
-            this.buttonExit.Location = new System.Drawing.Point(87, 109);
+            this.buttonExit.Location = new System.Drawing.Point(94, 37);
             this.buttonExit.Name = "buttonExit";
             this.buttonExit.Size = new System.Drawing.Size(75, 23);
-            this.buttonExit.TabIndex = 1;
+            this.buttonExit.TabIndex = 2;
             this.buttonExit.Text = "Выход";
             this.buttonExit.UseVisualStyleBackColor = true;
             this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
             // 
-            // MainForm
+            // ResultForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(179, 76);
             this.Controls.Add(this.buttonExit);
-            this.Controls.Add(this.buttonNewGame);
-            this.Name = "MainForm";
-            this.Text = "MainForm";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
+            this.Controls.Add(this.buttonMenu);
+            this.Controls.Add(this.labelResult);
+            this.Name = "ResultForm";
+            this.Text = "Result";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Timer MoveTimer;
-        private System.Windows.Forms.Timer FruitTimer;
-        private System.Windows.Forms.Button buttonNewGame;
+        private System.Windows.Forms.Label labelResult;
+        private System.Windows.Forms.Button buttonMenu;
         private System.Windows.Forms.Button buttonExit;
     }
 }

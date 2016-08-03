@@ -13,13 +13,16 @@ namespace Model
         private PictureBox _gameObject = new PictureBox();
 
         public GameObject()
-        { }
+        {
+            _gameObject.SizeMode = PictureBoxSizeMode.StretchImage;
+        }
 
         public GameObject(int x, int y, int width, int height, Color color)
         {
             _gameObject.Location = new Point(x, y);
             _gameObject.Size = new Size(width, height);
             _gameObject.BackColor = color;
+            _gameObject.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
         public int X
@@ -95,6 +98,18 @@ namespace Model
             get
             {
                 return _gameObject.Bounds;
+            }
+        }
+
+        public Image Image
+        {
+            get
+            {
+                return _gameObject.Image;
+            }
+            set
+            {
+                _gameObject.Image = value;
             }
         }
 

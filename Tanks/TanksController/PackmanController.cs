@@ -18,6 +18,8 @@ namespace Controller
         private Kolobok _kolobok;
         private GameObject _fruit;
 
+        private const int SCALE = 30;
+
         private string[] map = new string[] 
         {
             "wwwwwwwwww",
@@ -61,7 +63,7 @@ namespace Controller
 
         public PictureBox Draw()
         {
-            _field = _factory.CreateField(10, 10, map[0].Length * 10, map.Length * 10, Color.White);
+            _field = _factory.CreateField(10, 10, map[0].Length * SCALE, map.Length * SCALE, Color.White);
             for (int y = 0; y < map.Length; y++)
             {
                 for (int x = 0; x < map[y].Length; x++)
@@ -87,20 +89,20 @@ namespace Controller
 
         private Kolobok DrawKolobok(int x, int y)
         {
-            _kolobok = _factory.CreateKolobok(_field.Width / 2, _field.Height / 2, 10, 10, Color.Red);
+            _kolobok = _factory.CreateKolobok(_field.Width / 2, _field.Height / 2, SCALE, SCALE, Color.Red);
             return _kolobok;
         }
 
         private Tank DrawTank(int x, int y)
         {
-            Tank tank = _factory.CreateTank(x * 10, y * 10, 10, 10, Color.Black);
+            Tank tank = _factory.CreateTank(x * SCALE, y * SCALE, SCALE, SCALE, Color.Black);
             _tanks.Add(tank);
             return tank;
         }
 
         private GameObject DrawWall(int x, int y)
         {
-            GameObject wall = _factory.CraateWall(x * 10, y * 10, 10, 10, Color.Blue);
+            GameObject wall = _factory.CraateWall(x * SCALE, y * SCALE, SCALE, SCALE, Color.Blue);
             _walls.Add(wall);
             return wall;
         }
@@ -116,7 +118,7 @@ namespace Controller
             }
             if (map[y][x] != 'w')
             {
-                _fruit = _factory.CreateFruit(x * 10, y * 10, 10, 10, Color.Red);
+                _fruit = _factory.CreateFruit(x * SCALE, y * SCALE, SCALE, SCALE, Color.Red);
                 _field.Add(_fruit);
             }
         }
@@ -177,7 +179,35 @@ namespace Controller
             }
         }
 
-        private PartsOfTheWorld Direction(GameObject gameObject)
+        private void Rotation(MovableGameObject gameObject, PartsOfTheWorld newDirection)
+        {
+            if (gameObject.Direction == PartsOfTheWorld.North && newDirection == PartsOfTheWorld.South ||
+                gameObject.Direction == PartsOfTheWorld.South && newDirection == PartsOfTheWorld.North ||
+                gameObject.Direction == PartsOfTheWorld.West && newDirection == PartsOfTheWorld.East ||
+                gameObject.Direction == PartsOfTheWorld.East && newDirection == PartsOfTheWorld.West ||
+                gameObject.Direction == PartsOfTheWorld.None && newDirection == PartsOfTheWorld.South)
+            {
+                gameObject.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
+            }
+            else if (gameObject.Direction == PartsOfTheWorld.North && newDirection == PartsOfTheWorld.East ||
+                     gameObject.Direction == PartsOfTheWorld.East && newDirection == PartsOfTheWorld.South ||
+                     gameObject.Direction == PartsOfTheWorld.South && newDirection == PartsOfTheWorld.West ||
+                     gameObject.Direction == PartsOfTheWorld.West && newDirection == PartsOfTheWorld.North ||
+                     gameObject.Direction == PartsOfTheWorld.None && newDirection == PartsOfTheWorld.East)
+            {
+                gameObject.Image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            }
+            else if (gameObject.Direction == PartsOfTheWorld.North && newDirection == PartsOfTheWorld.West ||
+                     gameObject.Direction == PartsOfTheWorld.West && newDirection == PartsOfTheWorld.South ||
+                     gameObject.Direction == PartsOfTheWorld.South && newDirection == PartsOfTheWorld.East ||
+                     gameObject.Direction == PartsOfTheWorld.East && newDirection == PartsOfTheWorld.North ||
+                     gameObject.Direction == PartsOfTheWorld.None && newDirection == PartsOfTheWorld.West)
+            {
+                gameObject.Image.RotateFlip(RotateFlipType.Rotate270FlipNone);
+            }
+        }
+
+        private PartsOfTheWorld Direction(MovableGameObject gameObject)
         {
             Random rnd = new Random();
             switch (rnd.Next(0, 4))
@@ -185,6 +215,7 @@ namespace Controller
                 case 0:
                     if (gameObject.Y > 0)
                     {
+                        Rotation(gameObject, PartsOfTheWorld.North);
                         return PartsOfTheWorld.North;
                     }
                     else
@@ -194,6 +225,7 @@ namespace Controller
                 case 1:
                     if (gameObject.Y + gameObject.Width < _field.Height)
                     {
+                        Rotation(gameObject, PartsOfTheWorld.South);
                         return PartsOfTheWorld.South;
                     }
                     else
@@ -203,6 +235,7 @@ namespace Controller
                 case 2:
                     if (gameObject.X > 0)
                     {
+                        Rotation(gameObject, PartsOfTheWorld.West);
                         return PartsOfTheWorld.West;
                     }
                     else
@@ -212,6 +245,7 @@ namespace Controller
                 case 3:
                     if (gameObject.Y + gameObject.Width < _field.Width)
                     {
+                        Rotation(gameObject, PartsOfTheWorld.East);
                         return PartsOfTheWorld.East;
                     }
                     else
@@ -282,13 +316,27 @@ namespace Controller
             }
         }
 
-        public void Fighting()
+        public bool Fighting()
         {
             foreach (var tank in _tanks)
             {
                 if (_kolobok.IntersectsWith(tank))
                 {
                     tank.Attack(_kolobok);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void GetFruit()
+        {
+            if (_fruit != null)
+            {
+                if (_kolobok.IntersectsWith(_fruit))
+                {
+                    _kolobok.GetPoint();
+                    DrawFruit();
                 }
             }
         }
