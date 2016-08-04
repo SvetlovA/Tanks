@@ -8,15 +8,29 @@ using System.Windows.Forms;
 
 namespace Model
 {
+    /// <summary>
+    /// Class game object
+    /// </summary>
     public class GameObject : IDisposable
     {
         private PictureBox _gameObject = new PictureBox();
 
+        /// <summary>
+        /// Constructor of game object
+        /// </summary>
         public GameObject()
         {
             _gameObject.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
+        /// <summary>
+        /// Constructor of game object
+        /// </summary>
+        /// <param name="x"> Coordinate X</param>
+        /// <param name="y"> Coordinate Y</param>
+        /// <param name="width"> Width</param>
+        /// <param name="height"> Height</param>
+        /// <param name="color"> Color</param>
         public GameObject(int x, int y, int width, int height, Color color)
         {
             _gameObject.Location = new Point(x, y);
@@ -25,6 +39,24 @@ namespace Model
             _gameObject.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
+        /// <summary>
+        /// Constructor of game object
+        /// </summary>
+        /// <param name="x"> Coordinate X</param>
+        /// <param name="y"> Coordinate Y</param>
+        /// <param name="width"> Width</param>
+        /// <param name="height"> Height</param>
+        public GameObject(int x, int y, int width, int height, Bitmap image)
+        {
+            _gameObject.Location = new Point(x, y);
+            _gameObject.Size = new Size(width, height);
+            _gameObject.SizeMode = PictureBoxSizeMode.StretchImage;
+            _gameObject.Image = image;
+        }
+
+        /// <summary>
+        /// Coordinate X
+        /// </summary>
         public int X
         {
             get
@@ -33,6 +65,9 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Coordinate Y
+        /// </summary>
         public int Y
         {
             get
@@ -41,6 +76,9 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Width of game object
+        /// </summary>
         public int Width
         {
             get
@@ -49,6 +87,9 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Height of game object
+        /// </summary>
         public int Height
         {
             get
@@ -57,6 +98,9 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Location of game object
+        /// </summary>
         public Point Location
         {
             get
@@ -69,6 +113,9 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Size of game object
+        /// </summary>
         public Size Size
         {
             get
@@ -81,6 +128,9 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Color of game object
+        /// </summary>
         public Color Color
         {
             get
@@ -93,6 +143,9 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Bounds of game object
+        /// </summary>
         public Rectangle Bounds
         {
             get
@@ -101,6 +154,9 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Image of game object
+        /// </summary>
         public Image Image
         {
             get
@@ -113,16 +169,28 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Intersects with another game object
+        /// </summary>
+        /// <param name="gameObject">Game object</param>
+        /// <returns> Intersects or not</returns>
         public bool IntersectsWith(GameObject gameObject)
         {
             return _gameObject.Bounds.IntersectsWith(gameObject.Bounds);
         }
 
+        /// <summary>
+        /// Draw game object
+        /// </summary>
+        /// <returns> View of game object</returns>
         public PictureBox Draw()
         {
             return _gameObject;
         }
 
+        /// <summary>
+        /// Dispose view of game object
+        /// </summary>
         public void Dispose()
         {
             _gameObject.Dispose();

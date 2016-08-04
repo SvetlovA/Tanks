@@ -18,6 +18,9 @@ namespace Model
         public MovableGameObject(int x, int y, int width, int height, Color color) : base(x, y, width, height, color)
         { }
 
+        public MovableGameObject(int x, int y, int width, int height, Bitmap image) : base(x, y, width, height, image)
+        { }
+
         public PartsOfTheWorld Direction
         {
             get

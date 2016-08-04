@@ -19,6 +19,11 @@ namespace Model
             return new Field(x, y, width, height, color);
         }
 
+        public override Field CreateField(int x, int y, int width, int height, Bitmap image)
+        {
+            return new Field(x, y, width, height, image);
+        }
+
         public override GameObject CreateWall()
         {
             return new GameObject();
@@ -27,6 +32,11 @@ namespace Model
         public override GameObject CraateWall(int x, int y, int width, int height, Color color)
         {
             return new GameObject(x, y, width, height, color);
+        }
+
+        public override GameObject CraateWall(int x, int y, int width, int height, Bitmap image)
+        {
+            return new GameObject(x, y, width, height, image);
         }
 
         public override Kolobok CreateKolobok()
@@ -39,6 +49,11 @@ namespace Model
             return new Kolobok(x, y, width, height, color);
         }
 
+        public override Kolobok CreateKolobok(int x, int y, int width, int height, Bitmap image)
+        {
+            return new Kolobok(x, y, width, height, image);
+        }
+
         public override Tank CreateTank()
         {
             return new Tank();
@@ -49,6 +64,11 @@ namespace Model
             return new Tank(x, y, width, height, color);
         }
 
+        public override Tank CreateTank(int x, int y, int width, int height, Bitmap image)
+        {
+            return new Tank(x, y, width, height, image);
+        }
+
         public override GameObject CreateFruit()
         {
             return new GameObject();
@@ -57,6 +77,11 @@ namespace Model
         public override GameObject CreateFruit(int x, int y, int width, int height, Color color)
         {
             return new GameObject(x, y, width, height, color);
+        }
+
+        public override GameObject CreateFruit(int x, int y, int width, int height, Bitmap image)
+        {
+            return new GameObject(x, y, width, height, image);
         }
     }
 }

@@ -22,14 +22,18 @@ namespace Controller
 
         private string[] map = new string[] 
         {
-            "wwwwwwwwww",
-            "w000w000ew",
-            "w00ww000ew",
-            "w00w00000w",
-            "we0w00000w",
-            "w00000000w",
-            "w0000000pw",
-            "wwwwwwwwww"
+            "wwwwwwwwwwwwwwwwwwww",
+            "wew                w",
+            "w w wwwwwwwwwww  www",
+            "w wew              w",
+            "w www w wwwwwwww   w",
+            "w w w   w      w w w",
+            "w w w w w      w wpw",
+            "w w w   w        w w",
+            "w w wewew        w w",
+            "w w wwwwwwwwwww    w",
+            "w                  w",
+            "wwwwwwwwwwwwwwwwwwww"
         };
 
         public PackmanController()
@@ -89,20 +93,20 @@ namespace Controller
 
         private Kolobok DrawKolobok(int x, int y)
         {
-            _kolobok = _factory.CreateKolobok(_field.Width / 2, _field.Height / 2, SCALE, SCALE, Color.Red);
+            _kolobok = _factory.CreateKolobok(x * SCALE, y * SCALE, SCALE, SCALE, new Bitmap("C:/Users/21art/Desktop/Tanks/Images/kolobok.png"));
             return _kolobok;
         }
 
         private Tank DrawTank(int x, int y)
         {
-            Tank tank = _factory.CreateTank(x * SCALE, y * SCALE, SCALE, SCALE, Color.Black);
+            Tank tank = _factory.CreateTank(x * SCALE, y * SCALE, SCALE, SCALE, new Bitmap("C:/Users/21art/Desktop/Tanks/Images/tank.png"));
             _tanks.Add(tank);
             return tank;
         }
 
         private GameObject DrawWall(int x, int y)
         {
-            GameObject wall = _factory.CraateWall(x * SCALE, y * SCALE, SCALE, SCALE, Color.Blue);
+            GameObject wall = _factory.CraateWall(x * SCALE, y * SCALE, SCALE, SCALE, new Bitmap("C:/Users/21art/Desktop/Tanks/Images/Wall_Brown.png"));
             _walls.Add(wall);
             return wall;
         }
