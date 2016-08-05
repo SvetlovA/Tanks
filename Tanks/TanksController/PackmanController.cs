@@ -9,6 +9,9 @@ using System.Drawing;
 
 namespace Controller
 {
+    /// <summary>
+    /// Class controller
+    /// </summary>
     public class PackmanController
     {
         private readonly GameObjectsFactory _factory = new GameObjectsFactory();
@@ -36,6 +39,9 @@ namespace Controller
             "wwwwwwwwwwwwwwwwwwww"
         };
 
+        /// <summary>
+        /// Constructor of controller
+        /// </summary>
         public PackmanController()
         {
             _field = _factory.CreateField();
@@ -65,6 +71,10 @@ namespace Controller
             }
         }
 
+        /// <summary>
+        /// Draw field with gameobjects on it
+        /// </summary>
+        /// <returns> Field</returns>
         public PictureBox Draw()
         {
             _field = _factory.CreateField(10, 10, map[0].Length * SCALE, map.Length * SCALE, Color.White);
@@ -111,6 +121,9 @@ namespace Controller
             return wall;
         }
 
+        /// <summary>
+        /// Draw fruit on field
+        /// </summary>
         public void DrawFruit()
         {
             Random rnd = new Random();
@@ -127,6 +140,10 @@ namespace Controller
             }
         }
 
+        /// <summary>
+        /// Change direction of kolobok
+        /// </summary>
+        /// <param name="key"> Key</param>
         public void KolobokDirection(Keys key)
         {
             switch (key)
@@ -161,6 +178,9 @@ namespace Controller
             }
         }
 
+        /// <summary>
+        /// Movement of game objects
+        /// </summary>
         public void Movement()
         {
             KolobokMovement();
@@ -320,6 +340,10 @@ namespace Controller
             }
         }
 
+        /// <summary>
+        /// Fighting of game objects
+        /// </summary>
+        /// <returns> Attack or not</returns>
         public bool Fighting()
         {
             foreach (var tank in _tanks)
@@ -333,6 +357,9 @@ namespace Controller
             return false;
         }
 
+        /// <summary>
+        /// Get fruit
+        /// </summary>
         public void GetFruit()
         {
             if (_fruit != null)

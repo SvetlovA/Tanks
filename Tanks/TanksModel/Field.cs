@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Model
 {
+    /// <summary>
+    /// Class Field
+    /// </summary>
     public class Field : GameObject
     {
         /// <summary>
